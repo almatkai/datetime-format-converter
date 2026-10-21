@@ -3,8 +3,9 @@
   "name": "date-format-converter",
   "title": "Date Format Converter",
   "description": "Convert timestamps and datetime strings into various formats.",
-  "icon": "command-icon.png",
+  "icon": "assets/command-icon.png",
   "author": "almatkai",
+  "categories": ["Developer Tools"],
   "contributors": [
     "yifengkuaijian",
     "pernielsentikaer",
