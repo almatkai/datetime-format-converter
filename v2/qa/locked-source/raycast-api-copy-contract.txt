@@ -1,0 +1,26 @@
+declare interface ConvenienceActions {
+    /**
+     * Action that copies the content to the clipboard.
+     *
+     * @remarks
+     * The main window is closed, and a HUD is shown after the content was copied to the clipboard.
+     *
+     * @example
+     * ```typescript
+     * import { ActionPanel, Action, Detail } from "@raycast/api";
+     *
+     * export default function Command() {
+     *   return (
+     *     <Detail
+     *       markdown="Press `⌘ + .` and share some love."
+     *       actions={
+     *         <ActionPanel>
+     *           <Action.CopyToClipboard content="I ❤️ Raycast" shortcut={{ modifiers: ["cmd"], key: "." }} />
+     *         </ActionPanel>
+     *       }
+     *     />
+     *   );
+     * }
+     * ```
+     */
+    CopyToClipboard: typeof CopyToClipboard;

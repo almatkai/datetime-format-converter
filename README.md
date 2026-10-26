@@ -14,3 +14,5 @@ choose the string which you want.
 ## Welcome
 
 Welcome to tell me more formats you like.
+
+[Standalone native Rust V2 (feature-branch review)](v2/README.md).

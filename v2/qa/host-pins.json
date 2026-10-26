@@ -1,0 +1,26 @@
+{
+  "commit": "ea100cee3f69711de12485ba061950c5fc65258f",
+  "files": {
+    "docs/EXTERNAL_RUST_EXTENSIONS.md": "56da4ce632e1362ad56c380fa6d706a1f455ea44b67cd473b0b3eb216a9d5610",
+    "schemas/extension-v3.schema.json": "6f42f0316aa88097703496e828b11afcc7caecf8477fa7502df903c3ad2a8048",
+    "src-tauri/src/native_core/mod.rs": "7fc896152a44d67382e976cc52a3484bcaa48089e0c581c6c7e0d4e7e4bc5534",
+    "src-tauri/src/native_core/platform.rs": "33e6b7ec5b305ee3ffb857985d0483e54891998ff2a51c10f12695b80a1953e6",
+    "src-tauri/src/native_core/launcher/clipboard.rs": "8af5b882e06c9025d09a71b46b2f36c3e2a41513cd44fd2d0f945c58c9aa8d7d",
+    "src-tauri/src/native_core/extensions/native.rs": "f11d1f436fa5f9b045a7ac25f3516adb0efc6d4c12ce1f0f0c4768940fafe16f",
+    "src-tauri/src/native_core/extensions/registry.rs": "05dd5d9c5fafbac3034e9ba5e101e345a5d3bb658a49d22696e59ea924530e66",
+    "src-tauri/src/native_core/extensions/process_host.rs": "daf45815d76762323c6c1320c88ed24dfe28160a60bb4974b8073e3f17a3b982",
+    "src-tauri/src/native_core/extensions/catalog.rs": "c288513abea46926c2df8d30f6555e0a2d81cdbc2a07591be58710b25998ac23",
+    "src-tauri/src/native_core/extensions/v2_catalog.json": "13eab282b6c4ce2f7f76b614288544ca328cb70020c9d5bcbbd82b3b10efbc05",
+    "src-tauri/src/native_core/extensions/mod.rs": "bdeeaf79c655af88912a10db2c13114890b1ca95fbeb84a874d6bf1340c53b8b",
+    "src-tauri/src/native_core/extensions/v2_runtime.rs": "537aeb67c9a7ad052c348d6c4fe09b19027854d07e912a432d36bc14896fc392",
+    "src-tauri/src/native_core/extensions/loved_extensions.json": "f30e521b2c1b196301d81502478732d506a50ed975a54f179ed077a687ca5537",
+    "src-tauri/src/native_core/extensions/process.rs": "eb51da47a912c2a364eff16874b584ee0a2a4b571968ac17fd5056715a2c3d18",
+    "src-tauri/src/native_core/extensions/launcher.rs": "5f76c73ef2a945dfeb9967784aae1f13286ec178ad8c77a225ae7c150cdd6133",
+    "src-tauri/src/native_core/extensions/process_install.rs": "1fc130d58703f80db0c5255d31a1e31b9f4e1a67876f98f86ceae7ede6363ee7",
+    "src/renderer/ExtensionRuntimeView.tsx": "c8378d1a1cc91cf622f81dc1bd88ed986ea2e9c396f7ff497e649171f573c5e8",
+    "src/renderer/src/raycast-api/index.tsx": "7fc8413a72b92e8f88b0939cd93f91624018fe0765baa1e71b38b86f8cc77a64",
+    "src/renderer/src/raycast-api/form-runtime.tsx": "8568d0ac5be03eea97d0def38067dbbbdce5ae97c36a51024857ef20dce299a6",
+    "src/renderer/src/raycast-api/list-runtime.tsx": "c7e253c34ce6e0a5132cab96bf1f0388393faca79ff57c3fdc7956f377a0ab0f",
+    "src/renderer/src/raycast-api/detail-runtime.tsx": "32eecb50891e0f282bd3d78d8a38193ec24540bf70c3fdc8e43a1d368c97d54c"
+  }
+}

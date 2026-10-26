@@ -1,0 +1,19 @@
+# Inactive example: deliberately stored under v2/qa, not .github/workflows.
+name: datetime-format-converter-v2-example
+on: [workflow_dispatch]
+jobs:
+  native:
+    strategy:
+      matrix:
+        include:
+          - { os: macos-14, target: aarch64-apple-darwin }
+          - { os: windows-latest, target: x86_64-pc-windows-msvc }
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with: { targets: '${{ matrix.target }}', components: 'rustfmt,clippy' }
+      - run: cargo test --locked --manifest-path v2/Cargo.toml
+      - run: cargo clippy --locked --manifest-path v2/Cargo.toml --all-targets -- -D warnings
+      - run: cargo build --release --locked --manifest-path v2/Cargo.toml --target ${{ matrix.target }} --bin datetime-format-converter
+# No upload, release, catalog pin or installation step is authorized here.

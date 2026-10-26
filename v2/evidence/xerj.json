@@ -1,0 +1,20 @@
+{
+  "root": "/Users/almat/Desktop/code/Tezbar APP/rust-extension-ports/datetime-format-converter",
+  "prefix": "ax-c916c24cfb22",
+  "finalExitCode": 1,
+  "rawOutput": "ignored v2/.qa/xerj-final.txt",
+  "summary": [
+    "autoindex: ignore rules:   hidden:dotfile \u2014 4 files, 2 directories pruned",
+    "autoindex: ignore rules:   .gitignore:dist/ \u2014 1 directory pruned",
+    "autoindex: ignore rules:   v2/.gitignore:/dist/ \u2014 1 directory pruned",
+    "autoindex: ignore rules:   v2/.gitignore:/target/ \u2014 1 directory pruned",
+    "xerj-progress phase=hash basis=bytes pct=0.0 items=0/604 bytes=0/5804083 rate=unknown eta_s=unknown eta_quality=unknown since_progress_s=0.0 phase_elapsed_s=0.0 elapsed_s=0.0",
+    "xerj-progress phase=scan basis=bytes pct=0.0 items=0/504 bytes=0/5090113 rate=unknown eta_s=unknown eta_quality=unknown since_progress_s=0.0 phase_elapsed_s=0.0 elapsed_s=0.0",
+    "xerj-done ok=false exit=1 reason=aborted wall=0.4s",
+    "error: project new file v2/Cargo.toml: no frozen dataset accepts family docs, group None, and fields [\"end_line\", \"start_line\", \"text\"]; this requires unsupported dataset/schema evolution (use a new prefix)"
+  ],
+  "coverage": "INCOMPLETE: final indexing aborted on frozen schema for v2/Cargo.toml; no claim of V2 Rust search coverage. Initial four V1 code files indexed; full pinned reads/rg/Git are authoritative.",
+  "alternatePrefix": false,
+  "globalRestart": false,
+  "schemaMutation": false
+}

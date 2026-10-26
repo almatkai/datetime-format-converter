@@ -1,0 +1,30 @@
+[package]
+name = "datetime-format-converter-v2"
+version = "2.0.0"
+edition = "2021"
+rust-version = "1.85"
+license = "MIT"
+default-run = "datetime-format-converter"
+
+[dependencies]
+tezbar-extension-sdk = { git = "https://github.com/almatkai/tezbar-extension-sdk-rust.git", rev = "e955911f0bf5b558f9d3eb5183df0adc95c22af2", version = "=0.1.1" }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
+chrono = { version = "=0.4.42", features = ["clock"] }
+chrono-tz = "=0.10.4"
+iana-time-zone = "=0.1.64"
+regex = "=1.12.2"
+fancy-regex = "=0.16.2"
+uuid = { version = "=1.23.3", features = ["v4"] }
+
+[[bin]]
+name = "datetime-format-converter"
+path = "src/main.rs"
+
+[[bin]]
+name = "domain-oracle"
+path = "qa/domain_oracle.rs"
+
+[dev-dependencies]
+semver = "=1.0.27"

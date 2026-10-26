@@ -1,0 +1,18 @@
+{
+  ".eslintrc.json": "e83643eb09480ca4cba10297b57e6a663405f8e778dd7ed1434317448c817917",
+  ".gitignore": "b027adcbb6131ef49be335e9a699657351ca3d5bb2b474379634d1714f5a585b",
+  ".prettierrc": "af858765de11954366be23467b95bae5e1a86818411c6723df7542cea9ffd521",
+  "CHANGELOG.md": "fb1668bc2605aedc2c7c2b7428e41390f6a5119c78807d5cb733e11d89af0cf6",
+  "LICENSE": "1d7dbdbcd4fe14dfa08334fab20bffad23c1290f195792a3a4420dadf9912f81",
+  "README.md": "f0aca556a7805abdbd05736f2b731c9c1804bc47e2f4ab1df1cd18208b1695da",
+  "assets/command-icon.png": "e5c2567099d4ce8aaee8f22a3a8e391e51619adb86897e15ee9094d26011f09f",
+  "metadata/date-format-converter-1.png": "b3848b7fd632dc57a10aeca09e0759ce84161163a88ff87a22fbfecce8ab1aba",
+  "metadata/date-format-converter-2.png": "a319e33bbae33d8de3653bc6ae2cdbfb907e22344c6967cdc05f5d72a50318b2",
+  "package-lock.json": "508fc0955068694c577ba48e4b020546b91eee3e94b26981880ee1cb4b11d7c0",
+  "package.json": "1f76040aaa5034aa9420d1dce83c757568bece8d9f5c7a1340801eb8a45b1f86",
+  "raycast-env.d.ts": "fa82ebfbeaf8759032909f969e2dc3bcae994b0a75844280202da799c1b11fe6",
+  "src/index.tsx": "a3a3aa8c970b993038749cc3d28f341a8001ff57e6d5f5349c971ab0048f67c0",
+  "src/insert-natural-language-date.tsx": "9a18a1412cb72cd7007b93f53470a91876ff5bcfa676076fb72b0f47ffbb01d3",
+  "test/smoke.test.ts": "bde97147e5488d9c55774e76c0184b56c45bcab3583f075d6c36f5d592873a73",
+  "tsconfig.json": "bb151e8c2e5442f6f9e42b27c08d88b0f7d2c5c127268ce0aedab2ef964b1eee"
+}

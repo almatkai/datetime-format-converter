@@ -1,0 +1,36 @@
+Datetime Format Converter — native Rust V2 development port
+
+Derived from almatkai/datetime-format-converter at
+6633da332d70a4a34a2b317309ef61f2c0e4d74d (MIT, authentic source text
+retained as notices/OWN-LICENSE, including its literal backslash-n encoding).
+Upstream Raycast extensions pin:
+6734d85992290066fd31a7f5bee3cca3d3545a1a.
+The PNG in resources/command-icon.png is the unmodified immutable upstream
+asset, also identical to the own repository's asset. Root upstream license is
+notices/RAYCAST-UPSTREAM-LICENSE; no extension-specific license text was supplied.
+
+Native parsing/formatting translates the English casual grammar, dictionaries,
+timezone abbreviations and algorithms from chrono-node 2.8.3 (MIT) and dayjs
+1.11.13 (MIT). Authentic notices are included. qa/locked-source contains exact
+npm archive source for audit only; no JavaScript interpreter or Node runtime is
+used by the packaged executable. resources/chrono-en.json is a reproducible
+extraction of the locked chrono-node grammar and data, embedded in the binary.
+
+SDK 0.1.1 is pinned over HTTPS at
+https://github.com/almatkai/tezbar-extension-sdk-rust.git
+revision e955911f0bf5b558f9d3eb5183df0adc95c22af2 (Apache-2.0).
+See notices/SDK-LICENSE. Pinned Tezbar fixture code at
+ ea100cee3f69711de12485ba061950c5fc65258f is covered by notices/HOST-LICENSE.
+No host code is linked into the extension executable.
+
+Rust dependency notices are copied unchanged from the exact Cargo.lock packages;
+evidence/rust-notices.json records sources, checksums and any missing text.
+r-efi 6.0.0 declares MIT OR Apache-2.0 OR LGPL-2.1-or-later in its locked
+metadata but ships no license text found by the collector. This is recorded as
+a missing text, not a new grant. It is not linked into this macOS binary.
+chrono-tz includes the IANA tz database; its authentic tz/LICENSE and crate
+licenses are included under notices/rust/chrono-tz-0.10.4. See LIMITS.md for the
+pinned data version and the boundary relative to system JavaScript/ICU data.
+
+This is an uninstalled feature-branch development package. No production host,
+catalog, release or profile changes are included or authorized by this package.

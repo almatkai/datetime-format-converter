@@ -1,0 +1,83 @@
+{
+  "ownRepository": "https://github.com/almatkai/datetime-format-converter.git",
+  "ownCommit": "6633da332d70a4a34a2b317309ef61f2c0e4d74d",
+  "sourceSha256": {
+    "src/index.tsx": "a3a3aa8c970b993038749cc3d28f341a8001ff57e6d5f5349c971ab0048f67c0",
+    "src/insert-natural-language-date.tsx": "9a18a1412cb72cd7007b93f53470a91876ff5bcfa676076fb72b0f47ffbb01d3",
+    "package.json": "1f76040aaa5034aa9420d1dce83c757568bece8d9f5c7a1340801eb8a45b1f86",
+    "package-lock.json": "508fc0955068694c577ba48e4b020546b91eee3e94b26981880ee1cb4b11d7c0",
+    "assets/command-icon.png": "e5c2567099d4ce8aaee8f22a3a8e391e51619adb86897e15ee9094d26011f09f",
+    "LICENSE": "1d7dbdbcd4fe14dfa08334fab20bffad23c1290f195792a3a4420dadf9912f81"
+  },
+  "sdk": {
+    "repository": "https://github.com/almatkai/tezbar-extension-sdk-rust.git",
+    "rev": "e955911f0bf5b558f9d3eb5183df0adc95c22af2",
+    "version": "0.1.1",
+    "transport": "immutable HTTPS git, no sibling path"
+  },
+  "hostCommit": "ea100cee3f69711de12485ba061950c5fc65258f",
+  "hostFixtures": "qa/host-pins.json",
+  "upstream": {
+    "repository": "https://github.com/raycast/extensions",
+    "commit": "6734d85992290066fd31a7f5bee3cca3d3545a1a",
+    "path": "extensions/datetime-format-converter"
+  },
+  "icon": {
+    "url": "https://raw.githubusercontent.com/raycast/extensions/6734d85992290066fd31a7f5bee3cca3d3545a1a/extensions/datetime-format-converter/assets/command-icon.png",
+    "sha256": "e5c2567099d4ce8aaee8f22a3a8e391e51619adb86897e15ee9094d26011f09f",
+    "ownPinnedBytesIdentical": true,
+    "commands": [
+      "index",
+      "insert-natural-language-date"
+    ]
+  },
+  "lockedJs": {
+    "chrono-node": {
+      "version": "2.8.3",
+      "resolved": "https://registry.npmjs.org/chrono-node/-/chrono-node-2.8.3.tgz",
+      "integrity": "sha512-YukiXak31pshonVWaeJ9cZ4xxWIlbsyn5qYUkG5pQ+usZ6l22ASXDIk0kHUQkIBNOCLRevFkHJjnGKXwZNtyZw==",
+      "license": "MIT"
+    },
+    "dayjs": {
+      "version": "1.11.13",
+      "resolved": "https://registry.npmjs.org/dayjs/-/dayjs-1.11.13.tgz",
+      "integrity": "sha512-oaMBel6gjolK862uaPQOVTA7q3TZhuSvuMQAAglQDOWYO9A91IrAOUJEyKVlqJlHE0vq5p5UXxzdPfMH/x6xNg==",
+      "license": "MIT"
+    },
+    "@raycast/api": {
+      "version": "1.104.25",
+      "resolved": "https://registry.npmjs.org/@raycast/api/-/api-1.104.25.tgz",
+      "integrity": "sha512-4tZaoGBb5iVd9OQrDAwaTZlinz4/oRYpCaYXIaWKvjM5zxajos/Kpajp/y0ia+cOEv+qCvZ0e6m7qUvfqHj80Q==",
+      "license": "MIT"
+    }
+  },
+  "grammar": {
+    "file": "resources/chrono-en.json",
+    "sha256": "68a1adf5c8f870c70c96d35cc28970b0ea9458adadbd6dbca753659d512781df",
+    "producer": "qa/extract-grammar.cjs",
+    "licensing": "notices/chrono-node-LICENSE"
+  },
+  "timezoneData": {
+    "crate": "chrono-tz",
+    "version": "0.10.4",
+    "iana": "2025b",
+    "notice": "notices/rust/chrono-tz-0.10.4/tz/LICENSE"
+  },
+  "sourceOracle": {
+    "vectors": 2025,
+    "sha256": "757760e7ba0f33e1a3957eb63452be385120455940483629704dfafd235011e1",
+    "producer": "qa/source-oracle.cjs",
+    "node": "v26.7.0",
+    "defaultLocale": "actual imported dayjs English; no locale override",
+    "productRuntime": "native Rust only"
+  },
+  "catalog": {
+    "fixture": "qa/host/src-tauri/src/native_core/extensions/loved_extensions.json",
+    "id": "raycast.datetime-format-converter",
+    "repository": "https://github.com/almatkai/datetime-format-converter",
+    "confirmedCommands": [
+      "index",
+      "insert-natural-language-date"
+    ]
+  }
+}
