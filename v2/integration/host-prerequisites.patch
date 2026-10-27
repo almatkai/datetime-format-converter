@@ -1,0 +1,246 @@
+--- a/src/renderer/ExtensionRuntimeView.tsx
++++ b/src/renderer/ExtensionRuntimeView.tsx
+@@ -661,7 +661,8 @@
+               if (notice) showActionNotice(notice.message, isFormSurface)
+ 
+               if (result.mode === 'no-view') {
+-                setState((prev) => ({ ...prev, message: undefined }))
++                await window.tezbar.extensionDisposeSession({ sessionId: state.sessionId })
++                onBack()
+                 return
+               }
+ 
+--- a/src/renderer/src/raycast-api/index.tsx
++++ b/src/renderer/src/raycast-api/index.tsx
+@@ -59,8 +59,13 @@
+     onBack,
+     onSearchTextChanged,
+     onLoadMore,
+-    onInvokeAction,
++    onInvokeAction: invokeHost,
+   } = props
++  const listDraft = useRef<{ searchText: string; dirty: boolean; token: unknown } | null>(null)
++  const onInvokeAction = useCallback((id: string, values?: Record<string, unknown>) => {
++    const draft = listDraft.current
++    return invokeHost(id, root.props?.__draftGuard ? { ...values, __searchText: draft?.searchText ?? root.props.searchText, __draftDirty: draft?.dirty ?? false, __viewToken: draft?.token ?? root.props.__draftGuard } : values)
++  }, [invokeHost, root])
+   const [showActions, setShowActions] = useState(false)
+   const [actionFilterIds, setActionFilterIds] = useState<string[] | null>(null)
+   const formRuntimeRef = useRef<FormRuntimeHandle>(null)
+@@ -184,6 +189,7 @@
+             />
+           ) : (
+             <ListRuntime
++              onDraftChange={(draft) => { listDraft.current = draft }}
+               root={root}
+               title={title}
+               commandName={commandName}
+--- a/src/renderer/src/raycast-api/list-runtime.tsx
++++ b/src/renderer/src/raycast-api/list-runtime.tsx
+@@ -477,6 +477,7 @@
+   onOpenActions,
+   onSearchTextChanged,
+   onLoadMore,
++  onDraftChange,
+ }: {
+   root: ExtensionRuntimeNode
+   title: string
+@@ -487,6 +488,7 @@
+   onOpenActions: (actionIds?: string[]) => void
+   onSearchTextChanged: (searchText: string) => Promise<void> | void
+   onLoadMore: () => Promise<void> | void
++  onDraftChange?: (value: { searchText: string; dirty: boolean; token: unknown }) => void
+ }): React.ReactNode {
+   const inputRef = useRef<HTMLInputElement>(null)
+   const listRef = useRef<HTMLDivElement>(null)
+@@ -517,18 +519,21 @@
+     root.props.searchBarPlaceholder.trim().length > 0
+   const hasSearchText = typeof root.props?.searchText === 'string'
+   const hasClientSearchableRows = rows.length > 0
+-  const shouldShowSearch =
++  const shouldShowSearch = root.props?.__disableSearch !== true && (
+     isColorConversionSurface ||
+     hasServerSearch ||
+     Boolean(searchAccessory) ||
+     hasSearchPlaceholder ||
+     hasSearchText ||
+     hasClientSearchableRows ||
+-    !root.props?.navigationTitle
++    !root.props?.navigationTitle)
+ 
+   const [query, setQuery] = useState(
+     typeof root.props?.searchText === 'string' ? root.props.searchText : '',
+   )
++  const [draftRevision, setDraftRevision] = useState(0)
++  const draftDirty = useRef(false)
++  const draftText = useRef(query)
+   const [selected, setSelected] = useState(0)
+   const [accessoryValue, setAccessoryValue] = useState(
+     searchAccessory?.options[0]?.value ?? '',
+@@ -545,9 +550,13 @@
+ 
+   useEffect(() => {
+     if (typeof root.props?.searchText === 'string') {
++      if (root.props?.__draftGuard && draftDirty.current && root.props.searchText !== draftText.current) return
+       setQuery(root.props.searchText)
+-    }
+-  }, [root.props?.searchText])
++      draftText.current = root.props.searchText
++      draftDirty.current = false
++      onDraftChange?.({ searchText: root.props.searchText, dirty: false, token: root.props?.__draftGuard })
++    }
++  }, [root.props?.searchText, root.props?.__draftGuard])
+ 
+   useEffect(() => {
+     setAccessoryValue((current) => {
+@@ -559,7 +568,7 @@
+   }, [searchAccessory])
+ 
+   useEffect(() => {
+-    if (query === lastSentQuery.current) return
++    if (query === lastSentQuery.current && !draftDirty.current) return
+     if (debounceTimer.current) {
+       clearTimeout(debounceTimer.current)
+     }
+@@ -572,7 +581,7 @@
+         clearTimeout(debounceTimer.current)
+       }
+     }
+-  }, [query, onSearchTextChanged])
++  }, [query, onSearchTextChanged, draftRevision])
+ 
+   const colorConversionRows = useMemo<ListRow[]>(() => {
+     if (!isColorConversionSurface) return []
+@@ -693,14 +702,14 @@
+     ? hasQuery
+       ? 'No color formats'
+       : 'Enter a color'
+-    : hasQuery
++    : hasQuery && !hasServerSearch
+       ? 'No matching applications'
+       : emptyView?.title || 'No list items'
+   const emptyDescription = isColorConversionSurface
+     ? hasQuery
+       ? 'Try HEX, RGB, RGBA, HSL, or HSLA.'
+       : 'Type a color value to convert it.'
+-    : hasQuery
++    : hasQuery && !hasServerSearch
+       ? 'Try a different app name or keyword.'
+       : emptyView?.description || ''
+ 
+@@ -720,7 +729,12 @@
+                 type="text"
+                 value={query}
+                 onChange={(event) => {
+-                  setQuery(event.target.value)
++                  const text = event.target.value
++                  draftText.current = text
++                  draftDirty.current = true
++                  onDraftChange?.({ searchText: text, dirty: true, token: root.props?.__draftGuard })
++                  setDraftRevision((value) => value + 1)
++                  setQuery(text)
+                   setSelected(0)
+                 }}
+                 placeholder={searchBarPlaceholder}
+--- a/src-tauri/src/native_core/extensions/native.rs
++++ b/src-tauri/src/native_core/extensions/native.rs
+@@ -615,7 +615,7 @@
+             self.dispatch(channel, body, id).await.map(Some)
+         } else if channel == "extension:run-command" {
+             let requested = body["extensionId"].as_str().unwrap_or("");
+-            if requested.starts_with("com.tezbar.native.") || v2_runtime::slug(requested).is_some()
++            if requested.starts_with("com.tezbar.native.") || v2_runtime::slug(requested).is_some() || match registry::verified_alias(ctx, requested, body["commandName"].as_str().unwrap_or("")) { Ok(v) => v.is_some(), Err(e) => return Some(Ok(json!({"ok":false,"message":e}))) }
+             {
+                 self.launch(ctx, files, body).await
+             } else {
+@@ -643,6 +643,8 @@
+         let command = body["commandName"].as_str().ok_or("Missing commandName")?;
+         let canonical = if requested.starts_with("com.tezbar.native.") {
+             requested.to_string()
++        } else if let Some(id) = registry::verified_alias(ctx, requested, command)? {
++            id
+         } else {
+             v2_runtime::canonical_id(v2_runtime::slug(requested).ok_or("Unknown extension")?)
+         };
+--- a/src-tauri/src/native_core/extensions/registry.rs
++++ b/src-tauri/src/native_core/extensions/registry.rs
+@@ -14,6 +14,7 @@
+     id: String,
+     slug: String,
+     path: PathBuf,
++    resource_path: PathBuf,
+     manifest: Value,
+     data_dir: PathBuf,
+ }
+@@ -73,9 +74,10 @@
+             };
+             let Ok(slug) = slug(name) else { continue };
+             let native = name.starts_with("com.tezbar.native.");
++            let mut resource_path = path.clone();
+             let mut manifest = if native {
+                 match super::process_install::resolve(ctx, name) {
+-                    Ok(package) => package.manifest,
++                    Ok(package) => { resource_path = package.dir; package.manifest },
+                     Err(error) => {
+                         // A damaged canonical directory is NEVER a Raycast package.
+                         let mut value = read_json(&path.join("package.json"))
+@@ -108,6 +110,7 @@
+                 id,
+                 slug,
+                 path,
++                resource_path,
+                 manifest,
+                 data_dir: ctx.paths.data_dir.clone(),
+             });
+@@ -128,6 +131,21 @@
+ }
+ 
+ /// Native implementations use the same discovery and platform rules as the launcher.
++pub(super) fn verified_alias(ctx: &CoreContext, requested: &str, command: &str) -> Result<Option<String>, String> {
++    if requested.starts_with("com.tezbar.native.") || requested.trim() != requested { return Ok(None); }
++    let mut matches = Vec::new();
++    for e in collect(ctx) {
++        if !e.id.starts_with("com.tezbar.native.") || !e.manifest["healthError"].is_null() { continue; }
++        if !e.manifest["replaces"].as_array().is_some_and(|a|a.iter().any(|v|v.as_str()==Some(requested))) { continue; }
++        let Ok(package) = super::process_install::resolve(ctx, &e.id) else { continue; };
++        if !package.manifest["replaces"].as_array().is_some_and(|a|a.iter().any(|v|v.as_str()==Some(requested))) { continue; }
++        let covered = package.manifest["commands"].as_array().is_some_and(|a|a.iter().any(|c|c["name"]==command && c["runtime"]=="rust" && compatible(c,true)));
++        matches.push((e.id,covered));
++    }
++    if matches.len()>1 { return Err("Ambiguous verified extension alias".into()); }
++    Ok(matches.pop().and_then(|(id,covered)|covered.then_some(id)))
++}
++
+ pub(super) fn installed_command(ctx: &CoreContext, id: &str, command: &str) -> Option<Installed> {
+     let native = if id.starts_with("raycast.") {
+         let slug = slug(id).ok()?;
+@@ -245,8 +263,8 @@
+         return None;
+     }
+     let mut candidates = vec![
+-        extension.path.join(relative),
+-        extension.path.join("assets").join(relative),
++        extension.resource_path.join(relative),
++        extension.resource_path.join("assets").join(relative),
+     ];
+     if extension.id.starts_with("com.tezbar.native.") {
+         if let Some(packages) = extension.path.parent() {
+@@ -309,8 +327,8 @@
+         return None;
+     }
+     let mut candidates = vec![
+-        extension.path.join(relative),
+-        extension.path.join("assets").join(relative),
++        extension.resource_path.join(relative),
++        extension.resource_path.join("assets").join(relative),
+     ];
+     if extension.id.starts_with("com.tezbar.native.") {
+         if let Some(packages) = extension.path.parent() {
+@@ -574,6 +592,7 @@
+     let extension = Installed {
+         id: id.into(),
+         slug: slug(id)?,
++        resource_path: path.clone(),
+         path,
+         manifest: Value::Null,
+         data_dir: ctx.paths.data_dir.clone(),

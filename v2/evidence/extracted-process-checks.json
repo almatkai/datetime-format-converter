@@ -1,0 +1,16 @@
+{
+  "checks": [
+    "search A-B-A, current draft, copy/paste, consumed actions",
+    "preferences defaults/order, empty result settings, invalid parse editing",
+    "natural command automatically pastes; parse/format failure order no effects",
+    "clipboard read exact STRING and load/parse recovery",
+    "closed method-specific acknowledgements, explicit exact-byte retry",
+    "cancel and late ACK preserve exact prepared bytes without auto-replay",
+    "140 canceled opens release adapter and SDK capacity",
+    "bounded 128-session capacity and recovery",
+    "EOF cancels pending reverse effect and exits",
+    "copy closes window with NULL ACK; unknown hide retries no clipboard rewrite"
+  ],
+  "producerFixture": "tests/host_extracts.rs",
+  "productionExecutable": "/Users/almat/Desktop/code/Tezbar APP/rust-extension-ports/datetime-format-converter/v2/.qa/extracted-development/bin/datetime-format-converter"
+}

@@ -1,0 +1,22 @@
+{
+  "before": {
+    "draftPassed": false,
+    "wholeActualFunctions": [
+      "ListRuntime",
+      "ExtensionRuntimeSurface",
+      "ExtensionRuntimeView"
+    ],
+    "noViewBack": 0,
+    "noViewDisposals": 0
+  },
+  "after": {
+    "draftPassed": true,
+    "wholeActualFunctions": [
+      "ListRuntime",
+      "ExtensionRuntimeSurface",
+      "ExtensionRuntimeView"
+    ],
+    "noViewBack": 1,
+    "noViewDisposals": 1
+  }
+}
